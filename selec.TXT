@@ -1,0 +1,64 @@
+1) Вывести поставщиков, которые доставляют
+select items_for_work.name as name,provider.name as provider from finish_items_for_work
+join items_for_work on items_for_work.id = finish_items_for_work.name
+join provider on provider.id = finish_items_for_work.id_provider
+where provider.name = $provider
+order by name
+
+
+2)Вывести сотрудников занимающих должность
+select shop.name_shop, name,sname,position_emp.name_position as name_position, position_emp.salary as salary from emp
+join position_emp on position_emp.id = emp.IDD
+join shop on shop.id = emp.work_speace
+where emp.IDD = '$id'
+
+3)Вывести товар, который стоит больше чем
+
+select name,price from name_items
+where price > $count
+
+
+4)Вывести сотрудников работающих в магазине
+select shop.name_shop as name_shop, name,sname from emp
+join shop on shop.id = emp.work_speace
+where shop.id = $id
+
+5)Вывести наличие готовой продукции находящегося в магазине
+select name_items.name as name, shop.name_shop as name_shop from finish_items
+join shop on shop.id = finish_items.in_shop
+join name_items on name_items.id = finish_items.name
+where finish_items.in_shop = $id
+
+6)Вывести наличие сырья находящегося в магазине
+select items_for_work.name as name, shop.name_shop as name_shop from finish_items_for_work
+join shop on shop.id = finish_items_for_work.in_shop
+join items_for_work on items_for_work.id = finish_items_for_work.name
+where finish_items_for_work.in_shop = $id
+
+7)Вывести сырье по дате
+
+select items_for_work.name as name, shop.name_shop as name_shop,date from finish_items_for_work
+join shop on shop.id = finish_items_for_work.in_shop
+join items_for_work on items_for_work.id = finish_items_for_work.name
+where finish_items_for_work.date = $date
+
+
+8)Вывести закупленное больше чем
+
+select name, price_by_buy from items_for_work
+where price_by_buy > $count
+
+9)Вывести общую сумму у каждого магазина
+
+select name_items.name as name, shop.name_shop as name_shop,sum(name_items.price) as price from finish_items
+join shop on shop.id = finish_items.in_shop
+join name_items on name_items.id = finish_items.name
+group by name_shop
+order by price DESC
+
+10)Вывести общее количество товара в каждом магазине
+select name_items.name as name, shop.name_shop as name_shop,count(name_items.price) as price from finish_items
+join shop on shop.id = finish_items.in_shop
+join name_items on name_items.id = finish_items.name
+group by name_shop
+order by price DESC
